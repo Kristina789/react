@@ -1,7 +1,9 @@
-const path    = require('path');
-const webpack = require('webpack');
+const path                   = require('path');
+const HtmlWebpackPlugin      = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     entry: {
         app: './index.jsx'
     },
@@ -26,5 +28,14 @@ module.exports = {
                 presets: ['@babel/env', '@babel/react']
             }
         }]
+    },
+    plugins: [
+        //new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+        /*new HtmlWebpackPlugin({
+          template: '../index.html'
+        }),*/
+    ],
+    resolve: {
+        extensions: ['.js', '.jsx']
     }
 };

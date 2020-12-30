@@ -1,12 +1,12 @@
-import React    from 'react';
+import React       from 'react';
 
-import Message  from './Message.jsx';
+import MessageList from './MessageList';
 
 
 const App = (props) => {
     return (
         <main>
-            <Message />
+            <MessageList />
         </main>
     )
 }
