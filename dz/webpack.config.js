@@ -27,24 +27,17 @@ module.exports = {
             options: {
                 presets: ['@babel/env', '@babel/react']
             }
-<<<<<<< HEAD
         },
         {
             test: /\.css$/i,
             use: ['style-loader', 'css-loader']
-=======
->>>>>>> main
         }]
     },
     plugins: [
         //new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         /*new HtmlWebpackPlugin({
           template: '../index.html'
-<<<<<<< HEAD
         })*/
-=======
-        }),*/
->>>>>>> main
     ],
     resolve: {
         extensions: ['.js', '.jsx']

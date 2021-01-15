@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 
 import TextField                              from '@material-ui/core/TextField';
@@ -27,24 +26,6 @@ const MessageList = (props) => {
                 setAuthor('');
             }, 100);
         }
-=======
-import React, { useState, useEffect  } from 'react';
-
-import Message                         from './Message';
-
-
-const MessageList = (props) => {
-    const [list, setList]     = useState([]); 
-    const [author, setAuthor] = useState('');  
-    const [answer, setAnswer] = useState('');
-    const [message, setMess]  = useState('');   
-
-    const handleClick = () => {
-        let name_author = author.trim();
-        let content     = message.trim();
-
-        if (content.length > 0 && name_author.length > 0 ) setList(list => [...list, { message, author }]);
->>>>>>> main
     };
 
     const updateAuthor = (event) => {
@@ -53,7 +34,6 @@ const MessageList = (props) => {
 
     const updateMessage = (event) => {
         setMess(event.target.value);
-<<<<<<< HEAD
     };
 
     const sendMsgBot = (name) => {
@@ -63,24 +43,6 @@ const MessageList = (props) => {
             setMsgList(list => [...list, {message: `Hello, ${_author}! I'm bot.`, author: 'bot'}])
         }, 10000);        
     };
-
-    /*useEffect(() => {
-        if (message) {  
-            let _author = author + '';         
-
-            if (_author.length > 0) {
-                setTimeout(() => setMsgList(list => [...list, {message: `Hello, ${_author}! I'm bot.`, author: 'bot'}]), 4000);
-            }
-        } -- разные варианты 
-
-        let _author = author + '';         
-
-        if (_author.length > 0) {
-            setTimeout(() => setMsgList(list => [...list, {message: `Hello, ${_author}! I'm bot.`, author: 'bot'}]), 4000);
-        }
-        setMess('');
-        setAuthor('');
-    }, [msgList]); */
 
     return (
         <div className='layout'>        
@@ -102,57 +64,27 @@ const MessageList = (props) => {
                 </div>                
             </form>  
         </div>
-=======
-    }
-
-    useEffect(() => {
-        if (message) setAnswer(`Hello, ${author}! I'm robot.`);
-        
-        setMess('');
-        setAuthor('');
-    }, [list]);
-
-    return (
-        <>
-            <form onSubmit={(event) => event.preventDefault()}>
-                <label>
-                    Message:
-                    <input 
-                        type="text" 
-                        name="message" 
-                        value={message} 
-                        onChange={updateMessage}               
-                    />
-                </label>                
-                <p/>
-                <label> 
-                    Name of author:                    
-                    <input 
-                        type="text" 
-                        name="author" 
-                        value={author} 
-                        onChange={updateAuthor}               
-                    />
-                </label>
-                <p/>
-                <div>
-                    <button 
-                        type="submit" 
-                        onClick={handleClick}
-                    >
-                    Click me
-                    </button>
-                </div>                
-            </form>  
-            <ul>
-                {list.map((value, id) => 
-                    <Message txt={value.message} author={value.author} key={`message_${id}`}/>
-                )}
-            </ul>
-            <p>{answer}</p>
-        </>
->>>>>>> main
     );
 };
 
 export default MessageList;
+
+
+
+    /*useEffect(() => {
+        if (message) {  
+            let _author = author + '';         
+
+            if (_author.length > 0) {
+                setTimeout(() => setMsgList(list => [...list, {message: `Hello, ${_author}! I'm bot.`, author: 'bot'}]), 4000);
+            }
+        } -- разные варианты 
+
+        let _author = author + '';         
+
+        if (_author.length > 0) {
+            setTimeout(() => setMsgList(list => [...list, {message: `Hello, ${_author}! I'm bot.`, author: 'bot'}]), 4000);
+        }
+        setMess('');
+        setAuthor('');
+    }, [msgList]); */
