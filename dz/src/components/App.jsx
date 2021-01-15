@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React                                 from 'react';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -16,6 +17,18 @@ const App = (props) => {
             <ChatList />
             <MessageList />
         </MuiThemeProvider>
+=======
+import React       from 'react';
+
+import MessageList from './MessageList';
+
+
+const App = (props) => {
+    return (
+        <main>
+            <MessageList />
+        </main>
+>>>>>>> main
     )
 }
 

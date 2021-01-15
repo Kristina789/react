@@ -1,5 +1,6 @@
 import React from 'react';
 
+<<<<<<< HEAD
 import '../style/Message.css';
 
 
@@ -11,6 +12,13 @@ const Message = ({txt, author}) => {
         >
             <div>{txt}</div>
             <div className='message-author'>{author}</div> 
+=======
+
+const Message = ({txt, author}) => {
+    return (
+        <li>
+            <p>{txt}      --{author}</p>            
+>>>>>>> main
         </li>
     )
 };
