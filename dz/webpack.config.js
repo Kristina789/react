@@ -7,6 +7,7 @@ module.exports = {
     entry: {
         app: './index.jsx'
     },
+    devtool: 'cheap-inline-module-source-map',
     context: path.resolve(__dirname, 'src'),
     output: {
         path: path.resolve(__dirname, 'static', 'build'),
@@ -16,7 +17,10 @@ module.exports = {
         contentBase: path.resolve(__dirname),
         publicPath: path.resolve(__dirname, 'src'),
         compress: true,
-        port: 9000
+        port: 9000,
+        historyApiFallback: {
+            index: 'index.html'
+        }         
     },
     module: {
         rules: [{
@@ -27,13 +31,17 @@ module.exports = {
             options: {
                 presets: ['@babel/env', '@babel/react']
             }
+        },
+        {
+            test: /\.css$/i,
+            use: ['style-loader', 'css-loader']
         }]
     },
     plugins: [
-        //new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+        new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         /*new HtmlWebpackPlugin({
           template: '../index.html'
-        }),*/
+        })*/
     ],
     resolve: {
         extensions: ['.js', '.jsx']
