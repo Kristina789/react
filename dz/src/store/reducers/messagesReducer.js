@@ -1,4 +1,4 @@
-import {SEND_MESSAGE} from '../actions/messagesActions';
+import { SEND_MESSAGE, DELETE_MESSAGE, DELETE_MESSAGES } from '../actions/messagesActions';
 
 
 const initState = {
@@ -13,8 +13,20 @@ export default function messagesReducer(store=initState, action) {
             const msg = { message: action.content, author: action.sender, id: action.id, chatId: action.chatId };   
             
             return {...store, messages: [...store.messages, msg]};
-        
-            default:
-                return store;
+
+        case DELETE_MESSAGE: 
+            console.log(action);
+
+            const index = store.messages.map(item => item.id).indexOf(action.id);
+
+            return { ...store,  messages: [...store.messages.slice(0, index), ...store.messages.slice(index + 1)]};
+
+        case DELETE_MESSAGES: 
+            console.log(action);
+            
+            return store.messages.filter((item) => item.chatId !== action.chatId);
+
+        default:
+            return store;
     }
 }

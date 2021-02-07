@@ -1,21 +1,21 @@
-import React             from 'react';
+import React                  from 'react';
 
-import { Link }          from 'react-router-dom';
+import { push }               from 'connected-react-router';
+import { bindActionCreators } from "redux";
+import {connect}              from 'react-redux';
 
-import {connect}         from 'react-redux';
-
-import Button            from '@material-ui/core/Button';
+import Button                 from '@material-ui/core/Button';
 
 import '../style/Header.css';
 
 
-const Header = ({ chatId=1, profileStore }) => {
+const Header = ({ chatId=1, profileStore, push }) => {
+    const handleNavigate = (link) => push(link);
 
     return (
         <div className='container'>
-            <Link to='/profile/'>
-                <Button color="primary">Profile</Button>
-            </Link>            
+            <Button color="primary" onClick={() => handleNavigate('/profile/')} >Profile</Button>
+
             <span style={ { margin: '10px' } }>Name: {profileStore.name}</span>
             <span style={ { margin: '10px' } }>Age: {profileStore.age}</span>            
             <span style={ { fontSize: '20px' } }>Чат { chatId }</span>            
@@ -25,7 +25,10 @@ const Header = ({ chatId=1, profileStore }) => {
 
 
 const mapStateToProps = ({ profileReducer }) => ({
-    profileStore: profileReducer.profile[1],
+    profileStore: profileReducer.profile,
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ push },
+    dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

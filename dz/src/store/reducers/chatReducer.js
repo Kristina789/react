@@ -1,7 +1,6 @@
-import update           from 'react-addons-update';
+import update                                 from 'react-addons-update';
 
-import { ADD_MESSAGE }  from '../actions/messageActions';
-import { ADD_CHAT }     from "../actions/chatActions";
+import { ADD_CHAT, ADD_MESSAGE, DELETE_CHAT } from "../actions/chatActions";
 
 
 const initialStore = {
@@ -12,11 +11,24 @@ const initialStore = {
     }
 }
 
+/*const dict_filter = function(dict, filter)
+{
+    let result = {};
+
+    for (let key in dict)
+    {
+        if (filter(key, dict[key]))
+        {
+            result[key] = dict[key];
+        }
+    }
+
+    return result;
+}*/
+
 export default function chatReducer(store=initialStore, action) {
     switch (action.type) {
-        case ADD_MESSAGE: {
-            console.log(action);
-            
+        case ADD_MESSAGE:           
             return update(store, {
                 chats: { $merge: {
                     [action.chatId]: {
@@ -24,10 +36,9 @@ export default function chatReducer(store=initialStore, action) {
                         messages: [...store.chats[action.chatId].messages, action.id]
                     }
                 }},
-            });
-        }       
+            });          
         
-        case ADD_CHAT: {
+        case ADD_CHAT: 
             const chatId = Object.keys(store.chats).length + 1;
 
             return update(store, {
@@ -36,8 +47,23 @@ export default function chatReducer(store=initialStore, action) {
                         title: `Chat ${chatId}`, messages: []
                     }
                 }},
-            });
-        }
+            });        
+
+        case DELETE_CHAT:
+            /*   
+            console.log(dict_filter(store.chats, (key, val) => key !== action.chatId));
+            console.log(action.chatId);
+
+            return update(store, { chats: { $set: dict_filter(store.chats, (key, val) => key !== action.chatId) } });*/
+            
+            return Object.assign({}, store, {
+                chats: Object.keys(store.chats).reduce((result, key) => {
+                    if (key != action.chatId) {
+                        result[key] = store.chats[key];
+                    }
+                    return result;
+                }, {})
+            })
 
         default: 
             return store;

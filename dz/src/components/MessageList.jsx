@@ -18,9 +18,7 @@ const MessageList = (props) => {
 
         if (content.length > 0 && sender.length > 0 ) 
         {
-            const msg = props.sendMsg(content, sender); 
-            
-            props.sendMsgBot(msg);        
+            props.sendMsg(content, sender); 
         }
 
         setMess(''); 
@@ -43,7 +41,7 @@ const MessageList = (props) => {
         <div className='layout'>        
             <ul className='message-field'>
                 {props.messages.map((value, id) => 
-                    <Message txt={value.message} author={value.author} key={`message_${id}`}/>
+                    <Message txt={value.message} author={value.author} id={value.id} chatId={props.chatId} key={`message_${id}`} />
                 )}  
             </ul>
 
