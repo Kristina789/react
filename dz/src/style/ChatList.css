@@ -1,0 +1,9 @@
+.list {
+    display: block;
+    width: 30%;
+    float: left;
+}
+
+.message_bot {
+    color: red;
+}
