@@ -1,40 +1,57 @@
-import React, { useState }        from 'react';
+import React                  from 'react';
 
-import { Link }     from 'react-router-dom';
+import { bindActionCreators } from "redux";
+import { connect }            from 'react-redux';
 
-import List         from '@material-ui/core/List';
-import ListItem     from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Button   from '@material-ui/core/Button';
+import { push }               from 'connected-react-router';
+
+import List                   from '@material-ui/core/List';
+import ListItem               from '@material-ui/core/ListItem';
+import ListItemText           from '@material-ui/core/ListItemText';
+import Button                 from '@material-ui/core/Button';
+
+import { addChat, deleteChat } from '../store/actions/chatActions';
+import { deleteMessages }      from '../store/actions/messagesActions';
 
 import '../style/ChatList.css';
 
 
-const ChatList = () => {
-    const [chats_list, setChatsList] = useState([1, 2, 3]);
+const ChatList = (props) => {
+    const chats_list     = props.chatsStore;
 
-    const addNewChat = () => {
-        setChatsList(list => [...list, chats_list[chats_list.length - 1] + 1]);
-
-        console.log(chats_list);
-    }
+    const addNewChat     = () => props.addChat();
+    const handleNavigate = (link) => props.push(link);
+    const deleteChat     = (id) => {
+        props.deleteChat(+id);
+        props.deleteMessages(+id);
+    };
 
     return (
         <div className='list'>
             <Button color="primary" type="submit" onClick={addNewChat}>New chat</Button>
 
             <List component="nav" aria-label="secondary mailbox folders">                
-                {chats_list.map((value, id) => 
-                    <ListItem button key={id}>
-                        <Link to={`/chat/${value}`} >
-                            <ListItemText primary={`Chat ${value}`} />
-                        </Link>
-                    </ListItem>                      
-                )}
-            </List>
-            
-        </div>
+                {
+                    Object.entries(chats_list).map(([key]) => 
+                     <div key={`Chat ${key}`}>
+                        <ListItem button onClick={() => handleNavigate(`/chat/${key}`)} >
+                            <ListItemText primary={`Chat ${key}`} id={+key}  />
+                        </ListItem>
+                        <Button color="primary" type="submit" onClick={() => deleteChat(key)}>Delete</Button>
+                     </div>
+                    )
+                }
+            </List>            
+        </div>  
     )
 };
 
-export default ChatList;
+
+const mapStateToProps = ({ chatReducer }) => ({
+    chatsStore: chatReducer.chats,
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ addChat, deleteChat, push, deleteMessages },
+    dispatch);
+            
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);
