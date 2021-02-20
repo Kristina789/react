@@ -7,7 +7,7 @@ import { deleteMessage }      from '../store/actions/messagesActions';
 import '../style/Message.css';
 
 
-const Message = ({txt, author, id, deleteMessage}) => {
+const Message = ({txt, author, chatId, id, deleteMessage}) => {
     return (
         <li className='message'
             style={ { alignSelf: author === 'bot' ?
@@ -15,8 +15,7 @@ const Message = ({txt, author, id, deleteMessage}) => {
         >
             <div>{txt}</div>
             <div className='message-author'>{author}</div>
-            <div className='message-author'>{id}</div>
-            <button onClick={() => deleteMessage(id)}>delete</button>
+            <button onClick={() => deleteMessage(id, chatId)}>delete</button>
         </li>
     )
 };

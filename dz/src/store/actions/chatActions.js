@@ -1,7 +1,14 @@
+import { RSAA, getJSON } from 'redux-api-middleware';
+import { normalize }     from 'normalizr';
+import { chats }         from '../../utils/schemas';
+
+
+
 export const ADD_CHAT = '@@chat/ADD_CHAT';
 
-export const addChat = () => ({
+export const addChat = (title) => ({
     type: ADD_CHAT,
+    title,
 });
 
 
@@ -13,10 +20,23 @@ export const deleteChat = (chatId) => ({
 });
 
 
-export const ADD_MESSAGE = '@@message/ADD_MESSAGE';
+export const START_CHATS_LOADING   = '@@chat/START_CHATS_LOADING';
+export const SUCCESS_CHATS_LOADING = '@@chat/SUCCESS_CHATS_LOADING';
+export const ERROR_CHATS_LOADING   = '@@chat/ERROR_CHATS_LOADING';
 
-export const addMessage = (id, chatId) => ({
-    type: ADD_MESSAGE,
-    id,
-    chatId,
+export const loadChats = () => ({
+    [RSAA]: {
+        endpoint: '../../../api/chats.json',
+        method: 'GET',
+        types: [
+            START_CHATS_LOADING,
+            {
+                type: SUCCESS_CHATS_LOADING,
+                    payload: (action, state, res) => getJSON(res).then(
+                    json => normalize(json, [chats]),
+                ),
+            },
+            ERROR_CHATS_LOADING,
+        ],
+    },
 });

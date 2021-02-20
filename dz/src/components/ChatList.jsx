@@ -20,7 +20,7 @@ const ChatList = (props) => {
 
     const addNewChat     = () => props.addChat();
     const handleNavigate = (link) => props.push(link);
-    const deleteChat     = (id) =>props.deleteChat(Number(id));
+    const deleteChat     = (id) => props.deleteChat(+id);
 
     return (
         <div className='list'>
@@ -31,7 +31,7 @@ const ChatList = (props) => {
                     Object.entries(chats_list).map(([key]) => 
                      <div key={`Chat ${key}`}>
                         <ListItem button onClick={() => handleNavigate(`/chat/${key}`)} >
-                            <ListItemText primary={`Chat ${key}`} id={Number(key)}  />
+                            <ListItemText primary={`Chat ${key}`} id={+key}  />
                         </ListItem>
                         <Button color="primary" type="submit" onClick={() => deleteChat(key)}>Delete</Button>
                      </div>

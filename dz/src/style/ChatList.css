@@ -3,3 +3,13 @@
     width: 30%;
     float: left;
 }
+
+.message_bot {
+    color: red;
+}
+
+@media screen and (max-width: 650px) {
+    .list {
+        width: 15%;
+    }
+}

@@ -8,6 +8,8 @@ import Grid                                 from '@material-ui/core/Grid';
 
 import ChatList                             from './ChatList';
 import Router                               from './Router';
+import InstallPopup                         from './InstallPopup';
+import PushToggle                           from './PushToggle';
 import initStore, { history }               from '../store';
 
 
@@ -21,13 +23,15 @@ const App = (props) => {
                 <ConnectedRouter history={ history }>
                     <MuiThemeProvider theme={ theme }>
                         <Grid container spacing={1}>        
-                            <Grid item xs={3}>                         
+                            <Grid item xs={3}>          
+                                <PushToggle />                    
                                 <ChatList />
                             </Grid>  
                             <Grid item xs={9}>
                                 <Router />
                             </Grid>    
                         </Grid>
+                        <InstallPopup />
                     </MuiThemeProvider>
                 </ConnectedRouter>
             </PersistGate>

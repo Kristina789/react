@@ -1,31 +1,67 @@
-import { SEND_MESSAGE, DELETE_MESSAGE, DELETE_MESSAGES } from '../actions/messagesActions';
+import update from 'react-addons-update';
+
+import {
+    START_CHATS_LOADING,
+    SUCCESS_CHATS_LOADING,
+    ERROR_CHATS_LOADING,
+} from '../actions/chatActions';  
+
+import {
+    SEND_MESSAGE,
+    DELETE_MESSAGE,
+} from '../actions/messagesActions';  
 
 
 const initState = {
-    messages: []
+    messages: {},
+    isLoading: false,
 };
 
 export default function messagesReducer(store=initState, action) {
     switch (action.type) {
         case SEND_MESSAGE: 
-            console.log(action);
-
-            const msg = { message: action.content, author: action.sender, id: action.id, chatId: action.chatId };   
-            
-            return {...store, messages: [...store.messages, msg]};
+        {   
+            return update(store, {
+                messages: { $merge: { [action.id]: { id: action.id, text: action.content, author: action.sender, chatId: action.chatId } }
+            }});
+        }
 
         case DELETE_MESSAGE: 
-            console.log(action);
+        {
+            const new_messages = Object.keys(store.messages).reduce((result, key) => {
+                if (key != action.id) {
+                    result[key] = store.messages[key];
+                }
+                return result;
+            }, {});
 
-            const index = store.messages.map(item => item.id).indexOf(action.id);
+            return update(store, {
+                messages: { $set: new_messages},
+            }); 
+        }
+        
+        case START_CHATS_LOADING: 
+        {
+            return update(store, {                
+                isLoading: { $set: true },
+            });
+        }
 
-            return { ...store,  messages: [...store.messages.slice(0, index), ...store.messages.slice(index + 1)]};
+        case SUCCESS_CHATS_LOADING: 
+        {
+            return update(store, {
+                messages: { $set: action.payload.entities.messages },
+                isLoading: { $set: false },
+            });
+        }
 
-        case DELETE_MESSAGES: 
-            console.log(action);
-            
-            return store.messages.filter((item) => item.chatId !== action.chatId);
-
+        case ERROR_CHATS_LOADING: 
+        {
+            return update(store, {
+                isLoading: { $set: false },
+            });
+        }
+                
         default:
             return store;
     }
